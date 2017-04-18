@@ -9,9 +9,15 @@ public class CollisionPanel extends JPanel implements KeyListener {
   private Collidable red;
   private Collidable blue;
 
+  private CollidablePolygon green;
+  private CollidablePolygon cyan;
+
   public CollisionPanel() {
     red = new Collidable( 50, 50,Color.red );
     blue = new Collidable( 80, 80, Color.blue );
+
+    green = new CollidablePolygon( 200, 200, Color.green );
+    cyan = new CollidablePolygon( 240, 240, Color.cyan );
 
     this.addKeyListener( this );
     this.setFocusable( true );
@@ -24,11 +30,17 @@ public class CollisionPanel extends JPanel implements KeyListener {
 
     String message = blue.collides( red ) ? "YES" : "NO";
     graphics.drawString( message, 20, 20 );
+
+    green.repaint( graphics );
+    cyan.repaint( graphics );
+
+    String polyMessage = green.collides( cyan ) ? "YES" : "NO";
+    graphics.drawString( polyMessage, 20, 400 );
   }
 
   @Override
   public Dimension getPreferredSize() {
-    return new Dimension( 250, 250 );
+    return new Dimension( 500, 500 );
   }
 
   @Override
@@ -45,10 +57,28 @@ public class CollisionPanel extends JPanel implements KeyListener {
         red.moveRight();
         break;
       case KeyEvent.VK_UP:
-        blue.moveUp();
+        red.moveUp();
         break;
       case KeyEvent.VK_DOWN:
-        blue.moveDown();
+        red.moveDown();
+        break;
+      case KeyEvent.VK_A:
+        green.moveLeft();
+        break;
+      case KeyEvent.VK_D:
+        green.moveRight();
+        break;
+      case KeyEvent.VK_W:
+        green.moveUp();
+        break;
+      case KeyEvent.VK_S:
+        green.moveDown();
+        break;
+      case KeyEvent.VK_Q:
+        green.rotateLeft();
+        break;
+      case KeyEvent.VK_E:
+        green.rotateRight();
         break;
     }
 
